@@ -31,7 +31,6 @@ public class FavouriteColourApp {
 
         // Stream 1: we create the topic of users key to colours
         KStream<String, String> textLines = streamsBuilder.stream("favourite-colour-java");
-
         KStream<String, String> usersAndColours = textLines.filter((key, value) -> value.contains(","))
                 .selectKey((key, value)-> value.split(",")[0].toLowerCase())
                 .mapValues(value -> value.split(",")[1].toLowerCase())

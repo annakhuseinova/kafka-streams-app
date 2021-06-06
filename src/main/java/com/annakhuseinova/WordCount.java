@@ -20,6 +20,10 @@ public class WordCount {
         config.put(StreamsConfig.APPLICATION_ID_CONFIG, "kafka-streams-app");
         config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        /**
+         * Enabling exactly once semantic
+         * */
+        config.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, StreamsConfig.EXACTLY_ONCE);
         config.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         config.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
@@ -29,6 +33,7 @@ public class WordCount {
          * 1. Create a stream from Kafka topic
          * */
         KStream<String, String> wordCountInput = streamsBuilder.stream("word-count-input");
+
         /**
          * 2. Map values to lowercase
          * */
@@ -69,6 +74,6 @@ public class WordCount {
          * Shutdown hook to correctly close the streams application
          * */
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
-        
+
     }
 }
