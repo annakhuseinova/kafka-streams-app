@@ -12,7 +12,7 @@ import org.apache.kafka.streams.kstream.Produced;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class Main {
+public class WordCount {
 
     public static void main(String[] args) {
 
@@ -24,6 +24,7 @@ public class Main {
         config.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
         StreamsBuilder streamsBuilder = new StreamsBuilder();
+
         /**
          * 1. Create a stream from Kafka topic
          * */
@@ -68,5 +69,6 @@ public class Main {
          * Shutdown hook to correctly close the streams application
          * */
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+        
     }
 }
